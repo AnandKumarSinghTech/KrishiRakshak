@@ -107,5 +107,6 @@ mongoose
   .catch((err) => {
     console.error('❌ MongoDB connection failed:', err.message);
     console.error('💡 Make sure MongoDB is running!');
-    process.exit(1);
   });
+
+module.exports = app;
