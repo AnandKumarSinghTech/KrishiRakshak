@@ -519,7 +519,7 @@ async function handleLogin(e) {
     return;
   } catch (err) {
     hideLoading();
-    console.warn('Backend offline – falling back to localStorage login:', err.message);
+    console.warn('Login failed:', err.message);
   }
 
   const users = getUsers();
@@ -609,7 +609,7 @@ async function handleRegister(e) {
     return;
   } catch (err) {
     hideLoading();
-    console.warn('Backend offline – falling back to localStorage register:', err.message);
+    console.warn('Register failed:', err.message);
   }
 
   const users = getUsers();
@@ -741,31 +741,7 @@ function renderWeatherAlertBanner(alertData) {
   `;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   API STATUS CHECK
-   Pings the backend and shows green/red badge in result panel
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-async function checkApiStatus() {
-  const badge   = el('apiStatusBadge');
-  const statusT = el('apiStatusText');
-  if (!badge) return;
 
-  badge.className = 'api-status checking';
-  statusT.textContent = 'Checking API…';
-
-  try {
-    const res = await fetch(`${API_BASE}/diseases/wheat`, { signal: AbortSignal.timeout(3000) });
-    if (res.ok) {
-      badge.className = 'api-status connected';
-      statusT.textContent = '● Backend Connected (localhost:5000)';
-    } else {
-      throw new Error('Non-OK');
-    }
-  } catch {
-    badge.className = 'api-status disconnected';
-    statusT.textContent = '● Backend Offline – using local fallback';
-  }
-}
 
 function fetchWeather() {
   el('wDesc').textContent = 'Detecting location…';
@@ -1100,7 +1076,7 @@ function detectPestLocal(cropName, tag, lang) {
   };
 
   displayBackendResult(fakeResponse, lang);
-  showToast('⚠ Backend offline – showing local results', 3000);
+
 }
 
 function saveScan() {
@@ -1945,7 +1921,7 @@ const HINDI_MAP_OFFLINE = {
 
 function offlineSmartSearch(query, lang, crop) {
   const statusEl = el('searchStatusMsg');
-  if (statusEl) statusEl.textContent = '⚠ Backend offline – showing local results';
+
 
   const rawTerms = query.toLowerCase().split(/[,\s]+/).filter(t => t.length > 1);
 
@@ -1998,5 +1974,5 @@ function offlineSmartSearch(query, lang, crop) {
   }
 
   displaySearchResults(results, query, lang);
-  showToast('⚠ Backend offline – showing local data', 3000);
+
 }
