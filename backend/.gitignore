@@ -1,0 +1,11 @@
+# Environment variables – NEVER commit this!
+.env
+
+# Node modules – install with npm install
+node_modules/
+
+# Uploaded crop images
+uploads/*
+
+# Keep the uploads folder but ignore its contents
+!uploads/.gitkeep

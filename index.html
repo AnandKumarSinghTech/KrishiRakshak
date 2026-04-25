@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌾 KisanRakshak – Pest & Disease Alert System</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link rel="styleSheet" href="style.css">
+</head>
+<body class="light-mode">
+
+<div id="loadingOverlay" class="loading-overlay hidden">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p id="loadingText">Analyzing image… please wait</p>
+  </div>
+</div>
+
+<div id="page-login" class="page active">
+  <div class="login-bg">
+    <div class="login-card">
+      <div class="login-logo">🌾</div>
+      <h1 class="login-title">KisanRakshak</h1>
+      <p class="login-sub" id="loginSubtitle">Real-Time Pest & Disease Alert System for Farmers</p>
+
+      <div class="lang-toggle-login">
+        <button class="lang-btn active" id="btnLangEn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnLangHi" onclick="setLang('hi')">हिंदी</button>
+      </div>
+
+      <button class="btn-google" onclick="googleLogin()">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="22" height="22" alt="Google"/>
+        <span id="googleBtnText">Continue with Google</span>
+      </button>
+
+      <div class="divider"><span id="orText">or login with email</span></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label id="labelEmail">📧 Email</label>
+          <input type="email" id="loginEmail" placeholder="farmer@example.com" required/>
+          <span class="err" id="emailErr"></span>
+        </div>
+        <div class="form-group">
+          <label id="labelPassword">🔒 Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" placeholder="Min 6 characters" required/>
+            <span class="toggle-pw" onclick="togglePw()">👁</span>
+          </div>
+          <span class="err" id="pwErr"></span>
+        </div>
+        <div class="form-check">
+          <label>
+            <input type="checkbox" id="rememberMe"/> <span id="rememberText">Remember me</span>
+          </label>
+          <a href="#" id="forgotLink">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-primary full-width" id="loginBtn">🚪 Login</button>
+      </form>
+
+      <p class="signup-link" id="signupLink">
+        New farmer? <a href="#" onclick="showRegister()">Create Account</a>
+      </p>
+
+      <div style="margin-top:1rem; padding:0.8rem; background:#f0fdf4; border:1px dashed #4caf50; border-radius:10px; font-size:0.8rem; color:#2e7d32; text-align:left;">
+        <strong>🧪 Demo Login:</strong><br/>
+        📧 ramesh@farmer.in<br/>
+        🔒 farmer123
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-register" class="page">
+  <div class="login-bg">
+    <div class="login-card">
+      <div class="login-logo">🌱</div>
+      <h1 class="login-title" id="registerTitle">Create Your Account</h1>
+
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label id="labelName">👤 Full Name</label>
+          <input type="text" id="regName" placeholder="Ramesh Kumar" required/>
+        </div>
+        <div class="form-group">
+          <label>📧 Email</label>
+          <input type="email" id="regEmail" placeholder="farmer@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label id="labelPhone">📱 Phone</label>
+          <input type="tel" id="regPhone" placeholder="9876543210"/>
+        </div>
+        <div class="form-group">
+          <label id="labelVillage">🏘 Village / City</label>
+          <input type="text" id="regVillage" placeholder="Khanna, Punjab"/>
+        </div>
+        <div class="form-group">
+          <label id="labelMainCrop">🌾 Main Crop</label>
+          <select id="regCrop">
+            <option value="wheat">Wheat / गेहूँ</option>
+            <option value="rice">Rice / धान</option>
+            <option value="maize">Maize / मक्का</option>
+            <option value="cotton">Cotton / कपास</option>
+            <option value="tomato">Tomato / टमाटर</option>
+            <option value="potato">Potato / आलू</option>
+            <option value="onion">Onion / प्याज</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🔒 Password</label>
+          <input type="password" id="regPassword" placeholder="Min 6 characters" required/>
+          <span class="err" id="regErr"></span>
+        </div>
+        <button type="submit" class="btn-primary full-width" id="registerBtn">✅ Register</button>
+      </form>
+      <p class="signup-link">Already have account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+
+  <nav class="navbar">
+    <div class="nav-brand" onclick="showSection('dashboard')">
+      🌾 <span id="navBrand">KisanRakshak</span>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="showSection('dashboard')" id="navHome">🏠 Home</a></li>
+      <li><a href="#" onclick="showSection('detection')" id="navDetect">🔬 Pest Detection</a></li>
+      <li><a href="#" onclick="showSection('alerts')" id="navAlerts">⚠ Alerts</a></li>
+      <li><a href="#" onclick="showSection('guidance')" id="navGuidance">📚 Guidance</a></li>
+      <li><a href="#" onclick="showSection('schemes')" id="navSchemes">🏛 Gov Schemes</a></li>
+      <li><a href="#" onclick="showSection('profile')" id="navProfile">👤 Profile</a></li>
+      <li><a href="#" onclick="showSection('scan-history')" id="navHistory">📋 Scan History</a></li>
+      <li><a href="#" onclick="showSection('search')" id="navSearch">🔍 Smart Search</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="appLangEn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="appLangHi" onclick="setLang('hi')">हिंदी</button>
+      </div>
+      <button class="theme-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+      <button class="btn-logout" onclick="logout()" id="logoutBtn">🚪 Logout</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <section id="sec-dashboard" class="section active">
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h2 id="welcomeMsg">🌻 Welcome back, Farmer!</h2>
+          <p id="welcomeSub">Here is your farm's daily health summary.</p>
+        </div>
+        <div class="welcome-date" id="currentDate"></div>
+      </div>
+
+      <div class="cards-grid" id="quickCards">
+        <div class="card weather-card" id="weatherCard">
+          <div class="card-header">🌤 <span id="cardWeatherTitle">Weather Today</span></div>
+          <div class="weather-body">
+            <div class="weather-temp" id="wTemp">--°C</div>
+            <div class="weather-detail">
+              <span>💧 <span id="wHumidity">-- %</span></span>
+              <span>🌧 <span id="wRain">-- mm</span></span>
+              <span>💨 <span id="wWind">-- km/h</span></span>
+            </div>
+            <div class="weather-desc" id="wDesc">Fetching…</div>
+            <div class="weather-loc" id="wLoc">📍 Detecting location…</div>
+          </div>
+          <button class="btn-sm" onclick="fetchWeather()" id="refreshWeather">🔄 Refresh</button>
+        </div>
+
+        <div class="card alert-card" onclick="showSection('alerts')">
+          <div class="card-header">⚠ <span id="cardAlertTitle">Active Pest Alerts</span></div>
+          <div class="card-num" id="alertCount">0</div>
+          <p id="alertCardSub">alerts in your region</p>
+          <div class="badge badge-high" id="highAlertBadge">⬆ High Severity</div>
+        </div>
+
+        <div class="card health-card">
+          <div class="card-header">🌱 <span id="cardHealthTitle">Crop Health</span></div>
+          <div class="health-bars" id="healthBars"></div>
+        </div>
+
+        <div class="card detect-card" onclick="showSection('detection')">
+          <div class="card-header">🔬 <span id="cardDetectTitle">Quick Scan</span></div>
+          <p id="cardDetectSub">Upload a photo of your crop to detect pests or diseases instantly.</p>
+          <button class="btn-primary" id="scanNowBtn">📷 Scan Now</button>
+        </div>
+      </div>
+
+      <div class="risk-section">
+        <h3 id="riskTitle">🌡 Disease Risk Based on Today's Weather</h3>
+        <div id="diseaseRiskList" class="risk-list"></div>
+      </div>
+
+      <div class="history-section">
+        <h3 id="historyTitle">📋 Recent Scan History</h3>
+        <div id="scanHistory" class="scan-history-grid">
+          <p class="no-data" id="noHistoryText">No scans yet. Upload a crop image to get started!</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-detection" class="section">
+      <div class="section-header">
+        <h2 id="detectTitle">🔬 Crop Disease & Pest Detection</h2>
+        <p id="detectSub">Upload a photo of your crop leaf or plant. Our system will match diseases from our database.</p>
+      </div>
+
+      <div class="detection-layout">
+        
+        <div class="upload-panel card">
+          <h3 id="uploadTitle">📷 Upload Crop Image</h3>
+
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('cropImage').click()">
+            <span class="upload-icon">📁</span>
+            <p id="uploadHint">Click to select image or drag & drop here</p>
+            <p class="upload-note">.jpg, .jpeg, .png supported</p>
+          </div>
+          <input type="file" id="cropImage" accept="image/*" onchange="previewImage(event)" hidden/>
+
+          <div id="imagePreviewBox" class="preview-box hidden">
+            <img id="imagePreview" src="" alt="Preview"/>
+            <button class="btn-sm remove-img" onclick="removeImage()" id="removeImgBtn">✖ Remove</button>
+          </div>
+
+          <div class="form-group mt-1">
+            <label id="selectCropLabel">🌾 Select Crop Type</label>
+            <select id="detectionCrop">
+              <option value="wheat">Wheat / गेहूँ</option>
+              <option value="rice">Rice / धान</option>
+              <option value="maize">Maize / मक्का</option>
+              <option value="cotton">Cotton / कपास</option>
+              <option value="tomato">Tomato / टमाटर</option>
+              <option value="potato">Potato / आलू</option>
+              <option value="onion">Onion / प्याज</option>
+            </select>
+          </div>
+
+          <div class="form-group mt-1">
+            <label id="tagInputLabel">🏷 Enter Symptom / Tag</label>
+            
+            <div class="tag-input-wrapper" id="tagInputWrapper" onclick="focusTagInput()">
+              
+              <input
+                type="text"
+                id="tagRealInput"
+                placeholder="e.g. yellow spots, dry leaves, fungus"
+                autocomplete="off"
+                onkeydown="handleTagKeydown(event)"
+                oninput="handleTagInput(event)"
+              />
+            </div>
+            <p class="tag-hint">
+              💡 Press <strong>Enter</strong> or <strong>,</strong> to add a tag &nbsp;|&nbsp;
+              Press <strong>Backspace</strong> to remove last tag
+            </p>
+          </div>
+
+          <button class="btn-primary full-width mt-1" id="detectBtn" onclick="detectPest()">
+            🔍 Detect Pest / Disease
+          </button>
+        </div>
+
+        <div class="result-panel card" id="resultPanel">
+          <h3 id="resultTitle">📊 Detection Result</h3>
+
+          <div id="apiStatusBadge" class="api-status checking">
+            <span class="status-dot"></span>
+            <span id="apiStatusText">Checking API…</span>
+          </div>
+
+          <div id="resultContent" class="result-placeholder">
+            <div class="result-icon">🌿</div>
+            <p id="resultPlaceholderText">Upload an image and click "Detect" to see results here.</p>
+          </div>
+
+          <div id="actualResult" class="hidden">
+            <div id="multiResultContainer" class="multi-result-container"></div>
+            <button class="btn-sm mt-1" onclick="saveScan()" id="saveScanBtn">💾 Save to History</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-alerts" class="section">
+      <div class="section-header">
+        <h2 id="alertsTitle">⚠ Pest & Disease Alerts Dashboard</h2>
+        <p id="alertsSub">Regional alerts updated daily. Stay ahead of outbreaks.</p>
+      </div>
+      <div class="filter-bar">
+        <select id="alertCropFilter" onchange="filterAlerts()">
+          <option value="all" id="allCropsOpt">🌾 All Crops</option>
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+          <option value="tomato">Tomato</option>
+          <option value="potato">Potato</option>
+        </select>
+        <select id="alertSeverityFilter" onchange="filterAlerts()">
+          <option value="all" id="allSeverityOpt">⚡ All Severity</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <button class="btn-sm" onclick="filterAlerts()" id="applyFilterBtn">🔍 Filter</button>
+      </div>
+      <div id="alertsList" class="alerts-grid"></div>
+    </section>
+
+    <section id="sec-guidance" class="section">
+      <div class="section-header">
+        <h2 id="guidanceTitle">📚 Farming Guidance & Tips</h2>
+        <p id="guidanceSub">Filter tips by crop and learn best practices to keep your fields healthy.</p>
+      </div>
+      <div class="filter-bar">
+        <select id="tipCropFilter" onchange="filterTips()">
+          <option value="all">🌾 All Crops</option>
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+          <option value="tomato">Tomato</option>
+          <option value="potato">Potato</option>
+        </select>
+        <select id="tipCategoryFilter" onchange="filterTips()">
+          <option value="all" id="allCatOpt">📂 All Categories</option>
+          <option value="pest">Pest Control</option>
+          <option value="irrigation">Irrigation</option>
+          <option value="fertilizer">Fertilizer</option>
+          <option value="harvest">Harvest</option>
+        </select>
+      </div>
+      <div id="tipsList" class="tips-grid"></div>
+    </section>
+
+    <section id="sec-schemes" class="section">
+      <div class="section-header">
+        <h2 id="schemesTitle">🏛 Government Schemes for Farmers</h2>
+        <p id="schemesSub">Know your rights and benefits. Apply for subsidies and support.</p>
+      </div>
+      <div class="schemes-grid" id="schemesList"></div>
+    </section>
+
+    <section id="sec-profile" class="section">
+      <div class="section-header">
+        <h2 id="profileTitle">👤 My Farmer Profile</h2>
+      </div>
+      <div class="profile-layout">
+        <div class="profile-card card">
+          <div class="profile-avatar" id="profileAvatar">🧑‍🌾</div>
+          <h3 id="profileName">--</h3>
+          <p id="profileEmail" class="profile-email">--</p>
+          <p id="profileVillage" class="profile-village">📍 --</p>
+          <p id="profileCrop" class="profile-crop">🌾 Main Crop: --</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-num" id="statScans">0</span>
+              <span id="statScansLabel">Scans</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" id="statAlerts">0</span>
+              <span id="statAlertsLabel">Alerts Seen</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-form card">
+          <h3 id="editProfileTitle">✏ Edit Profile</h3>
+          <form onsubmit="saveProfile(event)">
+            <div class="form-group">
+              <label id="labelEditName">👤 Name</label>
+              <input type="text" id="editName"/>
+            </div>
+            <div class="form-group">
+              <label id="labelEditPhone">📱 Phone</label>
+              <input type="tel" id="editPhone"/>
+            </div>
+            <div class="form-group">
+              <label id="labelEditVillage">🏘 Village</label>
+              <input type="text" id="editVillage"/>
+            </div>
+            <div class="form-group">
+              <label id="labelEditCrop">🌾 Main Crop</label>
+              <select id="editCrop">
+                <option value="wheat">Wheat</option>
+                <option value="rice">Rice</option>
+                <option value="maize">Maize</option>
+                <option value="cotton">Cotton</option>
+                <option value="tomato">Tomato</option>
+                <option value="potato">Potato</option>
+                <option value="onion">Onion</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label id="labelEditLand">🏞 Land Area (acres)</label>
+              <input type="number" id="editLand" min="0" step="0.5"/>
+            </div>
+            <button type="submit" class="btn-primary" id="saveProfileBtn">💾 Save Changes</button>
+          </form>
+        </div>
+      </div>
+      <div class="card mt-2">
+        <h3 id="historySectionTitle">📋 My Scan History</h3>
+        <div id="profileHistory" class="scan-history-grid">
+          <p class="no-data" id="noProfileHistoryText">No scans yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-scan-history" class="section">
+      <div class="section-header">
+        <h2 id="scanHistoryTitle">📋 My Crop Scan History</h2>
+        <p id="scanHistorySub">View all your past crop disease detections from the database.</p>
+      </div>
+
+      <div class="scan-history-stats" id="shStatsRow">
+        <div class="sh-stat-card">
+          <span class="sh-stat-num" id="shStatTotal">–</span>
+          <span class="sh-stat-label">Total Scans</span>
+        </div>
+        <div class="sh-stat-card sh-high">
+          <span class="sh-stat-num" id="shStatHigh">–</span>
+          <span class="sh-stat-label">High Risk</span>
+        </div>
+        <div class="sh-stat-card sh-medium">
+          <span class="sh-stat-num" id="shStatMedium">–</span>
+          <span class="sh-stat-label">Medium Risk</span>
+        </div>
+        <div class="sh-stat-card sh-low">
+          <span class="sh-stat-num" id="shStatLow">–</span>
+          <span class="sh-stat-label">Low Risk</span>
+        </div>
+      </div>
+
+      <div class="sh-controls-bar">
+        <label for="shCropFilter">🌾 Crop:</label>
+        <select id="shCropFilter" onchange="applyScanHistoryFilters()">
+          <option value="all">All Crops</option>
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+          <option value="tomato">Tomato</option>
+          <option value="potato">Potato</option>
+          <option value="onion">Onion</option>
+        </select>
+
+        <label for="shSeverityFilter">⚠ Risk:</label>
+        <select id="shSeverityFilter" onchange="applyScanHistoryFilters()">
+          <option value="all">All Levels</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+
+        <label for="shSortOrder">📅 Sort:</label>
+        <select id="shSortOrder" onchange="applyScanHistoryFilters()">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+        </select>
+
+        <button class="btn-sm" onclick="loadScanHistory()">🔄 Refresh</button>
+        <button class="btn-primary btn-sm" onclick="showSection('detection')">📷 New Scan</button>
+      </div>
+
+      <p id="shResultCount" style="font-size:.83rem;color:var(--text-muted);margin-bottom:.8rem;"></p>
+
+      <div class="sh-error-banner" id="shErrorBanner" style="display:none;">
+        ❌ Could not load scan history. Make sure the backend is running at <strong>localhost:5000</strong>.
+      </div>
+
+      <div id="scanHistoryContainer" class="sh-cards-grid">
+        <div class="sh-loading">
+          <div class="spinner"></div>
+          <p>Loading your scan history…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-search" class="section">
+      <div class="section-header">
+        <h2 id="searchSectionTitle">🔍 Smart Disease Search</h2>
+        <p id="searchSectionSub">Search by symptoms in <strong>English</strong> or <strong>Hindi (हिंدी)</strong> — partial words work too!</p>
+      </div>
+
+      <div class="smart-search-box">
+        <div class="smart-search-input-row">
+          <div class="smart-search-input-wrap">
+            <span class="search-icon-prefix">🔍</span>
+            <input
+              type="text"
+              id="smartSearchInput"
+              class="smart-search-input"
+              placeholder="Type symptoms: yellow spots / पीले धब्बे / rust / पत्ती मुड़ना"
+              autocomplete="off"
+              oninput="smartSearchDebounce()"
+              onkeydown="if(event.key==='Enter') runSmartSearch()"
+            />
+            <button class="smart-search-clear" id="smartSearchClear" onclick="clearSmartSearch()" title="Clear">✕</button>
+          </div>
+          <button class="btn-primary smart-search-btn" onclick="runSmartSearch()" id="smartSearchBtn">
+            🔍 Search
+          </button>
+        </div>
+
+        <div class="smart-search-filters">
+          <label for="searchCropFilter">🌾 Crop:</label>
+          <select id="searchCropFilter" onchange="runSmartSearch()">
+            <option value="">All Crops</option>
+            <option value="wheat">Wheat / गेहूँ</option>
+            <option value="rice">Rice / धान</option>
+            <option value="maize">Maize / मक्का</option>
+            <option value="cotton">Cotton / कपास</option>
+            <option value="tomato">Tomato / टमाटर</option>
+            <option value="potato">Potato / आलू</option>
+            <option value="onion">Onion / प्याज</option>
+          </select>
+
+          <span class="search-lang-hint" id="searchLangHint">🌐 Hindi &amp; English supported</span>
+        </div>
+
+        <div class="search-suggestions">
+          <span class="search-sugg-label">Try:</span>
+          <button class="search-chip" onclick="setSearchChip('yellow spots')">🟡 yellow spots</button>
+          <button class="search-chip" onclick="setSearchChip('पीले धब्बे')">🟡 पीले धब्बे</button>
+          <button class="search-chip" onclick="setSearchChip('rust')">🟠 rust</button>
+          <button class="search-chip" onclick="setSearchChip('पत्ती मुड़ना')">🔵 पत्ती मुड़ना</button>
+          <button class="search-chip" onclick="setSearchChip('blight')">🔴 blight</button>
+          <button class="search-chip" onclick="setSearchChip('माहू')">🟤 माहू</button>
+          <button class="search-chip" onclick="setSearchChip('aphids')">🟤 aphids</button>
+          <button class="search-chip" onclick="setSearchChip('जंग')">🟠 जंग</button>
+        </div>
+      </div>
+
+      <p id="searchStatusMsg" class="search-status-msg"></p>
+
+      <div id="searchResultsGrid" class="search-results-grid"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>🌾 KisanRakshak</h4>
+        <p id="footerTagline">Protecting farmers with technology.</p>
+      </div>
+      <div class="footer-col">
+        <h4 id="footerHelpTitle">📞 Help & Support</h4>
+        <p>Helpline: <strong>1800-180-1551</strong></p>
+        <p>Email: help@kisanrakshak.in</p>
+      </div>
+      <div class="footer-col">
+        <h4 id="footerLinksTitle">Quick Links</h4>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a><br/>
+        <a href="#" onclick="showSection('detection')">Pest Detection</a><br/>
+        <a href="#" onclick="showSection('schemes')">Gov Schemes</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p id="footerCopy">© 2024 KisanRakshak. Made with ❤ for Indian Farmers.</p>
+    </div>
+  </footer>
+
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="hindiDiseaseData.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
