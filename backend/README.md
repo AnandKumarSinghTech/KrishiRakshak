@@ -1,4 +1,4 @@
-# 🌾 KisanRakshak – Backend API
+# 🌾 KrishiRakshak – Backend API
 
 **Real-Time Pest and Disease Alert System for Farmers**
 

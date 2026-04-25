@@ -52,7 +52,7 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: '✅ Registration successful! Welcome to KisanRakshak.',
+      message: '✅ Registration successful! Welcome to KrishiRakshak.',
       token,
       user: {
         id:      newUser._id,

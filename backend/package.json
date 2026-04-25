@@ -1,7 +1,7 @@
 {
-  "name": "kisanrakshak-backend",
+  "name": "krishirakshak-backend",
   "version": "1.0.0",
-  "description": "Backend API for KisanRakshak – Real-Time Pest and Disease Alert System for Farmers",
+  "description": "Backend API for KrishiRakshak – Real-Time Pest and Disease Alert System for Farmers",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "nodemon": "^3.0.2"
   },
-  "author": "KisanRakshak Team",
+  "author": "KrishiRakshak Team",
   "license": "MIT",
   "keywords": [],
   "type": "commonjs"

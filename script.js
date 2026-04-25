@@ -33,7 +33,7 @@ const T = {
     labelVillage: '🏘 Village / City',
     labelMainCrop: '🌾 Main Crop',
     registerBtn: '✅ Register',
-    navBrand: 'KisanRakshak',
+    navBrand: 'KrishiRakshak',
     navHome: '🏠 Home',
     navDetect: '🔬 Pest Detection',
     navAlerts: '⚠ Alerts',
@@ -90,7 +90,7 @@ const T = {
     footerTagline: 'Protecting farmers with technology.',
     footerHelpTitle: '📞 Help & Support',
     footerLinksTitle: 'Quick Links',
-    footerCopy: '© 2024 KisanRakshak. Made with ❤ for Indian Farmers.',
+    footerCopy: '© 2024 KrishiRakshak. Made with ❤ for Indian Farmers.',
     loginSuccess: '✅ Login successful! Welcome back.',
     loggedOut: '👋 Logged out successfully.',
     profileSaved: '✅ Profile saved!',
@@ -1661,7 +1661,7 @@ document.addEventListener('DOMContentLoaded', function() {
   renderTips();
   renderSchemes();
 
-  console.log('🌾 KisanRakshak App Initialized!');
+  console.log('🌾 KrishiRakshak App Initialized!');
   console.log('📧 Demo: ramesh@farmer.in | 🔒 farmer123');
   console.log(`🔗 Backend API: ${API_BASE}/detect`);
 });

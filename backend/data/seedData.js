@@ -761,7 +761,7 @@ const diseases = [
 async function seedDatabase() {
   try {
     
-    const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/kisanrakshak';
+    const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/krishirakshak';
     await mongoose.connect(MONGO_URI);
     console.log('✅ Connected to MongoDB');
     console.log(`📍 Database: ${MONGO_URI}\n`);

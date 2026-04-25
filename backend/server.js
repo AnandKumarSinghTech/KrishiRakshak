@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-  secret:            process.env.JWT_SECRET || 'kisanrakshak_session_secret',
+  secret:            process.env.JWT_SECRET || 'krishirakshak_session_secret',
   resave:            false,
   saveUninitialized: false,
   cookie:            { secure: false }, 
@@ -54,7 +54,7 @@ app.use('/api/alerts', alertRoutes);
 
 app.get('/api', (req, res) => {
   res.json({
-    message:   '🌾 KisanRakshak API is running!',
+    message:   '🌾 KrishiRakshak API is running!',
     version:   '2.0.0',
     endpoints: {
       register:      'POST   /api/auth/register',
@@ -73,7 +73,7 @@ app.get('/api', (req, res) => {
 });
 
 const PORT      = process.env.PORT     || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/kisanrakshak';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/krishirakshak';
 
 mongoose
   .connect(MONGO_URI)

@@ -213,7 +213,7 @@ function geocodeVillage(villageName) {
       hostname: 'nominatim.openstreetmap.org',
       path:     `/search?q=${query}&format=json&limit=1`,
       method:   'GET',
-      headers:  { 'User-Agent': 'KisanRakshak/2.0' },
+      headers:  { 'User-Agent': 'KrishiRakshak/2.0' },
     };
 
     console.log(`📍 Geocoding: "${villageName}"`);
