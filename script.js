@@ -40,6 +40,8 @@ const T = {
     navGuidance: '📚 Guidance',
     navSchemes: '🏛 Gov Schemes',
     navProfile: '👤 Profile',
+    navHistory: '📋 Scan History',
+    navSearch: '🔍 Smart Search',
     logoutBtn: '🚪 Logout',
     welcomeMsg: '🌻 Welcome back, Farmer!',
     welcomeSub: "Here is your farm's daily health summary.",
@@ -90,7 +92,7 @@ const T = {
     footerTagline: 'Protecting farmers with technology.',
     footerHelpTitle: '📞 Help & Support',
     footerLinksTitle: 'Quick Links',
-    footerCopy: '© 2024 KrishiRakshak. Made with ❤ for Indian Farmers.',
+    footerCopy: '© 2024 KrishiRakshak for Indian Farmers.',
     loginSuccess: '✅ Login successful! Welcome back.',
     loggedOut: '👋 Logged out successfully.',
     profileSaved: '✅ Profile saved!',
@@ -120,7 +122,9 @@ const T = {
     labelVillage: '🏘 गाँव / शहर',
     labelMainCrop: '🌾 मुख्य फसल',
     registerBtn: '✅ पंजीकरण करें',
-    navBrand: 'किसान रक्षक',
+    navBrand: 'KrishiRakshak',
+    navHistory: '📋 स्कैन इतिहास',
+    navSearch: '🔍 स्मार्ट सर्च',
     navHome: '🏠 होम',
     navDetect: '🔬 कीट जांच',
     navAlerts: '⚠ अलर्ट',
@@ -177,7 +181,7 @@ const T = {
     footerTagline: 'तकनीक से किसानों की रक्षा।',
     footerHelpTitle: '📞 सहायता',
     footerLinksTitle: 'त्वरित लिंक',
-    footerCopy: '© 2024 किसान रक्षक। भारतीय किसानों के लिए ❤ से बनाया।',
+    footerCopy: '© 2024 KrishiRakshak भारतीय किसानों के लिए।',
     loginSuccess: '✅ लॉगिन सफल! वापस स्वागत है।',
     loggedOut: '👋 लॉगआउट सफल।',
     profileSaved: '✅ प्रोफाइल सहेजी गई!',
@@ -383,13 +387,15 @@ function setLang(lang) {
   setText('labelVillage', t.labelVillage);
   setText('labelMainCrop', t.labelMainCrop);
   setText('registerBtn', t.registerBtn);
-  setText('navBrand', t.navBrand);
+  setText('navBrand', 'KrishiRakshak');
   setText('navHome', t.navHome);
   setText('navDetect', t.navDetect);
   setText('navAlerts', t.navAlerts);
   setText('navGuidance', t.navGuidance);
   setText('navSchemes', t.navSchemes);
   setText('navProfile', t.navProfile);
+  setText('navHistory', t.navHistory);
+  setText('navSearch', t.navSearch);
   setText('logoutBtn', t.logoutBtn);
   setText('cardWeatherTitle', t.cardWeatherTitle);
   setText('refreshWeather', t.refreshWeather);
@@ -435,10 +441,10 @@ function setLang(lang) {
   setText('statAlertsLabel', t.statAlertsLabel);
   setText('historySectionTitle', t.historySectionTitle);
   setText('noProfileHistoryText', t.noProfileHistoryText);
-  setText('footerTagline', t.footerTagline);
+  setText('footerTagline', lang === 'hi' ? 'आपकी फसल, हमारी जिम्मेदारी।' : 'Your crop, our responsibility.');
   setText('footerHelpTitle', t.footerHelpTitle);
   setText('footerLinksTitle', t.footerLinksTitle);
-  setText('footerCopy', t.footerCopy);
+  setText('footerCopy', '© 2024 KrishiRakshak for Indian Farmers.');
 
   if (AppState.currentUser) {
     const name = AppState.currentUser.name.split(' ')[0];
@@ -520,6 +526,10 @@ async function handleLogin(e) {
   } catch (err) {
     hideLoading();
     console.warn('Login failed:', err.message);
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      el('pwErr').textContent = '❌ Backend connection failed. Please check Vercel database connection.';
+      return;
+    }
   }
 
   const users = getUsers();
@@ -610,6 +620,10 @@ async function handleRegister(e) {
   } catch (err) {
     hideLoading();
     console.warn('Register failed:', err.message);
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      el('regErr').textContent = '❌ Backend connection failed. Please check Vercel database connection.';
+      return;
+    }
   }
 
   const users = getUsers();
@@ -1852,7 +1866,11 @@ function displaySearchResults(diseases, query, lang) {
         <div class="src-footer">
           <button class="btn-primary btn-sm src-detect-btn"
             onclick="goDetectFromSearch('${d.cropName}')">
-            📷 ${lang === 'hi' ? 'इस फसल की जाँच करें' : 'Detect this crop'}
+            📷 ${lang === 'hi' ? 'जाँच करें' : 'Detect'}
+          </button>
+          <button class="btn-sm src-save-btn"
+            onclick="saveSearchToHistory('${safeName.replace(/'/g, "\\'")}', '${d.cropName}', '${sev}', '${(treatText||'').replace(/'/g, "\\'").replace(/\n/g, ' ')}')">
+            💾 ${lang === 'hi' ? 'सहेजें' : 'Save'}
           </button>
         </div>
       </div>
@@ -1908,6 +1926,33 @@ function clearSmartSearch() {
       <p>Supports <strong>English</strong> and <strong>Hindi (हिंदी)</strong></p>
     </div>
   `;
+}
+
+function saveSearchToHistory(diseaseName, cropName, severity, treatment) {
+  const lang = AppState.lang;
+  const scans = getScanHistory();
+  const cropEmojis = { wheat:'🌾', rice:'🍚', maize:'🌽', cotton:'🫧', tomato:'🍅', potato:'🥔', onion:'🧅' };
+  
+  // Create a fake image URL using a canvas or just a placeholder with emoji
+  // For simplicity, we use a placeholder service
+  const emoji = cropEmojis[cropName] || '🌿';
+  const placeholder = `https://placehold.co/400x400/2e7d32/white?text=${encodeURIComponent(emoji + ' ' + cropName)}`;
+
+  scans.unshift({
+    id: Date.now(),
+    disease:    diseaseName,
+    diseaseHi:  diseaseName,
+    crop:       cropName,
+    confidence: 100,
+    imageUrl:   placeholder,
+    date:       new Date().toLocaleDateString('en-IN'),
+    severity:   severity || 'Medium',
+    treatment:  treatment || ''
+  });
+  if (scans.length > 20) scans.pop();
+  saveScanHistoryData(scans);
+  showToast(T[lang].scanSaved);
+  renderScanHistory();
 }
 
 const HINDI_MAP_OFFLINE = {
