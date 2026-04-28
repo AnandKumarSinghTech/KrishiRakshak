@@ -92,7 +92,7 @@ const T = {
     footerTagline: 'Protecting farmers with technology.',
     footerHelpTitle: '📞 Help & Support',
     footerLinksTitle: 'Quick Links',
-    footerCopy: '© 2024 KrishiRakshak for Indian Farmers.',
+    footerCopy: '© 2026 KrishiRakshak for Indian Farmers.',
     loginSuccess: '✅ Login successful! Welcome back.',
     loggedOut: '👋 Logged out successfully.',
     profileSaved: '✅ Profile saved!',
@@ -181,7 +181,7 @@ const T = {
     footerTagline: 'तकनीक से किसानों की रक्षा।',
     footerHelpTitle: '📞 सहायता',
     footerLinksTitle: 'त्वरित लिंक',
-    footerCopy: '© 2024 KrishiRakshak भारतीय किसानों के लिए।',
+    footerCopy: '© 2026 KrishiRakshak भारतीय किसानों के लिए।',
     loginSuccess: '✅ लॉगिन सफल! वापस स्वागत है।',
     loggedOut: '👋 लॉगआउट सफल।',
     profileSaved: '✅ प्रोफाइल सहेजी गई!',
@@ -200,14 +200,14 @@ const T = {
 };
 
 const ALERTS_DATA = [
-  { id:1, crop:'wheat', cropLabel:'Wheat / गेहूँ', emoji:'🌾', disease:'Yellow Rust (Stripe Rust)', diseaseHi:'पीली कुंगी', severity:'High', location:'Punjab, Haryana, UP', date:'2024-12-15', solution:'Spray Propiconazole 25% EC @ 0.1%.', solutionHi:'प्रोपिकोनाज़ोल 25% EC @ 0.1% का छिड़काव करें।' },
-  { id:2, crop:'rice', cropLabel:'Rice / धान', emoji:'🍚', disease:'Brown Plant Hopper (BPH)', diseaseHi:'भूरा माहू', severity:'High', location:'West Bengal, Odisha, Bihar', date:'2024-12-14', solution:'Apply Buprofezin 25% SC @ 1 ml/L water.', solutionHi:'बुप्रोफेज़िन 25% SC @ 1 ml/L का छिड़काव करें।' },
-  { id:3, crop:'cotton', cropLabel:'Cotton / कपास', emoji:'🫧', disease:'Pink Bollworm', diseaseHi:'गुलाबी सुंडी', severity:'High', location:'Gujarat, Maharashtra', date:'2024-12-13', solution:'Install pheromone traps @ 5/acre.', solutionHi:'फेरोमोन ट्रैप @ 5/एकड़ लगाएं।' },
-  { id:4, crop:'tomato', cropLabel:'Tomato / टमाटर', emoji:'🍅', disease:'Early Blight (Alternaria)', diseaseHi:'अर्ली ब्लाइट', severity:'Medium', location:'Karnataka, HP, UP', date:'2024-12-12', solution:'Apply Mancozeb 75% WP @ 2.5 g/L.', solutionHi:'मैनकोजेब 75% WP @ 2.5 g/L का छिड़काव करें।' },
-  { id:5, crop:'potato', cropLabel:'Potato / आलू', emoji:'🥔', disease:'Late Blight (Phytophthora)', diseaseHi:'लेट ब्लाइट', severity:'High', location:'UP, West Bengal, Bihar', date:'2024-12-11', solution:'Spray Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.', solutionHi:'मेटालैक्सिल 8% + मैनकोजेब 64% WP का छिड़काव करें।' },
-  { id:6, crop:'maize', cropLabel:'Maize / मक्का', emoji:'🌽', disease:'Fall Armyworm (FAW)', diseaseHi:'फॉल आर्मीवॉर्म', severity:'Medium', location:'Karnataka, AP', date:'2024-12-10', solution:'Apply Emamectin Benzoate 5% SG @ 0.4 g/L.', solutionHi:'इमामेक्टिन बेंजोएट 5% SG @ 0.4 g/L का प्रयोग करें।' },
-  { id:7, crop:'wheat', cropLabel:'Wheat / गेहूँ', emoji:'🌾', disease:'Aphids (Wheat Aphid)', diseaseHi:'माहू', severity:'Medium', location:'Punjab, Rajasthan', date:'2024-12-09', solution:'Spray Dimethoate 30% EC @ 1.5 ml/L.', solutionHi:'डाइमेथोएट 30% EC @ 1.5 ml/L का छिड़काव करें।' },
-  { id:8, crop:'rice', cropLabel:'Rice / धान', emoji:'🍚', disease:'Blast Disease (Pyricularia)', diseaseHi:'ब्लास्ट रोग', severity:'Low', location:'Assam, Chhattisgarh', date:'2024-12-08', solution:'Spray Tricyclazole 75% WP @ 0.6 g/L at boot stage.', solutionHi:'ट्राइसाइक्लाज़ोल 75% WP @ 0.6 g/L का छिड़काव करें।' },
+  { id:1, crop:'wheat', cropLabel:'Wheat / गेहूँ', emoji:'🌾', disease:'Yellow Rust (Stripe Rust)', diseaseHi:'पीली कुंगी', severity:'High', location:'Punjab, Haryana, UP', date:'2026-12-15', solution:'Spray Propiconazole 25% EC @ 0.1%.', solutionHi:'प्रोपिकोनाज़ोल 25% EC @ 0.1% का छिड़काव करें।' },
+  { id:2, crop:'rice', cropLabel:'Rice / धान', emoji:'🍚', disease:'Brown Plant Hopper (BPH)', diseaseHi:'भूरा माहू', severity:'High', location:'West Bengal, Odisha, Bihar', date:'2026-12-14', solution:'Apply Buprofezin 25% SC @ 1 ml/L water.', solutionHi:'बुप्रोफेज़िन 25% SC @ 1 ml/L का छिड़काव करें।' },
+  { id:3, crop:'cotton', cropLabel:'Cotton / कपास', emoji:'🫧', disease:'Pink Bollworm', diseaseHi:'गुलाबी सुंडी', severity:'High', location:'Gujarat, Maharashtra', date:'2026-12-13', solution:'Install pheromone traps @ 5/acre.', solutionHi:'फेरोमोन ट्रैप @ 5/एकड़ लगाएं।' },
+  { id:4, crop:'tomato', cropLabel:'Tomato / टमाटर', emoji:'🍅', disease:'Early Blight (Alternaria)', diseaseHi:'अर्ली ब्लाइट', severity:'Medium', location:'Karnataka, HP, UP', date:'2026-12-12', solution:'Apply Mancozeb 75% WP @ 2.5 g/L.', solutionHi:'मैनकोजेब 75% WP @ 2.5 g/L का छिड़काव करें।' },
+  { id:5, crop:'potato', cropLabel:'Potato / आलू', emoji:'🥔', disease:'Late Blight (Phytophthora)', diseaseHi:'लेट ब्लाइट', severity:'High', location:'UP, West Bengal, Bihar', date:'2026-12-11', solution:'Spray Metalaxyl 8% + Mancozeb 64% WP @ 2.5 g/L.', solutionHi:'मेटालैक्सिल 8% + मैनकोजेब 64% WP का छिड़काव करें।' },
+  { id:6, crop:'maize', cropLabel:'Maize / मक्का', emoji:'🌽', disease:'Fall Armyworm (FAW)', diseaseHi:'फॉल आर्मीवॉर्म', severity:'Medium', location:'Karnataka, AP', date:'2026-12-10', solution:'Apply Emamectin Benzoate 5% SG @ 0.4 g/L.', solutionHi:'इमामेक्टिन बेंजोएट 5% SG @ 0.4 g/L का प्रयोग करें।' },
+  { id:7, crop:'wheat', cropLabel:'Wheat / गेहूँ', emoji:'🌾', disease:'Aphids (Wheat Aphid)', diseaseHi:'माहू', severity:'Medium', location:'Punjab, Rajasthan', date:'2026-12-09', solution:'Spray Dimethoate 30% EC @ 1.5 ml/L.', solutionHi:'डाइमेथोएट 30% EC @ 1.5 ml/L का छिड़काव करें।' },
+  { id:8, crop:'rice', cropLabel:'Rice / धान', emoji:'🍚', disease:'Blast Disease (Pyricularia)', diseaseHi:'ब्लास्ट रोग', severity:'Low', location:'Assam, Chhattisgarh', date:'2026-12-08', solution:'Spray Tricyclazole 75% WP @ 0.6 g/L at boot stage.', solutionHi:'ट्राइसाइक्लाज़ोल 75% WP @ 0.6 g/L का छिड़काव करें।' },
 ];
 
 const TIPS_DATA = [
@@ -289,9 +289,7 @@ function handleTagKeydown(event) {
   }
 }
 
-/**
- * Handle comma typed mid-word (oninput catches pasted commas etc.)
- */
+
 function handleTagInput(event) {
   const input = el('tagRealInput');
   
@@ -321,17 +319,13 @@ function addTag(tagText) {
   renderTagChips();
 }
 
-/**
- * Remove a tag by its index and re-render chips
- */
+
 function removeTag(index) {
   AppState.tags.splice(index, 1);
   renderTagChips();
 }
 
-/**
- * Re-render all tag chips inside the wrapper div
- */
+
 function renderTagChips() {
   const wrapper = el('tagInputWrapper');
   const input   = el('tagRealInput');
@@ -444,7 +438,7 @@ function setLang(lang) {
   setText('footerTagline', lang === 'hi' ? 'आपकी फसल, हमारी जिम्मेदारी।' : 'Your crop, our responsibility.');
   setText('footerHelpTitle', t.footerHelpTitle);
   setText('footerLinksTitle', t.footerLinksTitle);
-  setText('footerCopy', '© 2024 KrishiRakshak for Indian Farmers.');
+  setText('footerCopy', '© 2026 KrishiRakshak for Indian Farmers.');
 
   if (AppState.currentUser) {
     const name = AppState.currentUser.name.split(' ')[0];
@@ -462,12 +456,6 @@ function setLang(lang) {
   renderScanHistory();
 }
 
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark-mode');
-  AppState.theme = isDark ? 'dark' : 'light';
-  localStorage.setItem('kr_theme', AppState.theme);
-  el('themeToggle').textContent = isDark ? '☀' : '🌙';
-}
 
 function showSection(name) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -487,6 +475,13 @@ function showSection(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  AppState.theme = isDark ? 'dark' : 'light';
+  localStorage.setItem('kr_theme', AppState.theme);
+  el('themeToggle').textContent = isDark ? '☀' : '🌙';
+}
 function toggleMenu() { el('navLinks').classList.toggle('open'); }
 
 function togglePw() {
@@ -625,6 +620,10 @@ async function handleRegister(e) {
       return;
     }
   }
+
+
+
+
 
   const users = getUsers();
   if (users.find(u => u.email === email)) { el('regErr').textContent = T[lang].emailExists; return; }
@@ -851,14 +850,11 @@ function updateCropHealth() {
   `).join('');
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ✅ PEST DETECTION  – sends cropName + tag + image
-   to POST http://localhost:5000/api/detect via FormData
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-/**
- * Preview image before upload
- */
+
+
+
+
 function previewImage(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -932,15 +928,33 @@ async function detectPest() {
 
     displayBackendResult(data, lang);
 
-    AppState.detectedDisease = {
-      name:      data.results?.[0]?.diseaseName || 'Unknown',
-      nameHi:    data.results?.[0]?.diseaseName || 'Unknown',
-      crop:      cropName,
+    const scanData = {
+      id: Date.now(),
+      disease:    data.results?.[0]?.diseaseName || 'Unknown',
+      diseaseHi:  data.results?.[0]?.diseaseName || 'Unknown',
+      crop:       cropName,
       confidence: 90,
       severity:  data.results?.[0]?.severity || 'Medium',
-      imageUrl:  AppState.previewImageUrl,
+      imageUrl:  data.imagePath ? `${window.location.origin}${data.imagePath}` : AppState.previewImageUrl,
+      date:       new Date().toLocaleDateString('en-IN'),
       timestamp: new Date().toISOString()
     };
+
+    AppState.detectedDisease = {
+      name:      scanData.disease,
+      nameHi:    scanData.diseaseHi,
+      crop:      scanData.crop,
+      confidence: scanData.confidence,
+      severity:  scanData.severity,
+      imageUrl:  scanData.imageUrl,
+      timestamp: scanData.timestamp
+    };
+
+    // save to localStorage for the dashboard's "Recent History"
+    const scans = getScanHistory();
+    scans.unshift(scanData);
+    if (scans.length > 20) scans.pop();
+    saveScanHistoryData(scans);
 
     renderScanHistory();
 
@@ -1243,9 +1257,7 @@ function displayScanHistory(scans) {
   container.innerHTML = scans.map(scan => buildScanHistoryCard(scan)).join('');
 }
 
-/**
- * Build HTML for a single scan card in the Scan History section.
- */
+
 function buildScanHistoryCard(scan) {
   // Format date
   const date    = new Date(scan.createdAt);
@@ -1253,8 +1265,13 @@ function buildScanHistoryCard(scan) {
   const timeStr = date.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
 
   const cropEmojis = { wheat:'🌾', rice:'🍚', maize:'🌽', cotton:'🫧', tomato:'🍅', potato:'🥔', onion:'🧅' };
-  const imgHtml = scan.imagePath
-    ? `<img src="http://localhost:5000${scan.imagePath}" alt="Crop scan" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${cropEmojis[scan.cropName]||'🌿'}'"/>`
+  let imgSrc = scan.imagePath || scan.imageUrl;
+  if (imgSrc && imgSrc.startsWith('/uploads')) {
+    const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000' : '';
+    imgSrc = baseUrl + imgSrc;
+  }
+  const imgHtml = imgSrc
+    ? `<img src="${imgSrc}" alt="Crop scan" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${cropEmojis[scan.cropName]||'🌿'}'"/>`
     : (cropEmojis[scan.cropName] || '🌿');
 
   const treatment = scan.treatment
@@ -1570,9 +1587,8 @@ function renderSchemes() {
   `).join('');
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   PROFILE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// PROFILE
+
 function renderProfile() {
   const user = AppState.currentUser;
   if (!user) return;
@@ -1607,9 +1623,9 @@ function saveProfile(e) {
   showToast(T[lang].profileSaved);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DASHBOARD UPDATE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+   //DASHBOARD UPDATE
+
 function updateDashboard() {
   el('currentDate').textContent = getDateString();
   const alertArr = _realAlerts || ALERTS_DATA;
@@ -1701,11 +1717,7 @@ function initSmartSearch() {
   }
 }
 
-/**
- * Called on every keystroke via oninput.
- * Waits 500ms after the user stops typing before running search.
- * This prevents hammering the backend on every character.
- */
+
 function smartSearchDebounce() {
   clearTimeout(_searchDebounceTimer);
   const val = (el('smartSearchInput')?.value || '').trim();
@@ -1772,11 +1784,7 @@ async function runSmartSearch() {
   }
 }
 
-/**
- * Renders search result cards into #searchResultsGrid.
- * Each card shows: crop badge, disease name, severity, tags,
- * symptoms, treatment preview, and a "Detect this" button.
- */
+
 function displaySearchResults(diseases, query, lang) {
   const grid = el('searchResultsGrid');
   if (!grid) return;
@@ -1878,28 +1886,20 @@ function displaySearchResults(diseases, query, lang) {
   }).join('');
 }
 
-/**
- * Small helper: capitalize the first letter of a string.
- * (We also define this in the scan-history code; safe to call it here too.)
- */
+
 function capitalize(str) {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-/**
- * When user clicks "Detect this crop" from a search result,
- * jump to the detection section and pre-select that crop.
- */
+
 function goDetectFromSearch(cropName) {
   showSection('detection');
   const select = el('detectionCrop');
   if (select && cropName) select.value = cropName;
 }
 
-/**
- * Set a quick-suggestion chip as the search input value and run.
- */
+
 function setSearchChip(text) {
   const input = el('smartSearchInput');
   if (input) {
@@ -1910,9 +1910,7 @@ function setSearchChip(text) {
   runSmartSearch();
 }
 
-/**
- * Clear the search input and reset the grid.
- */
+
 function clearSmartSearch() {
   const input = el('smartSearchInput');
   if (input) { input.value = ''; input.focus(); }
@@ -1928,17 +1926,14 @@ function clearSmartSearch() {
   `;
 }
 
-function saveSearchToHistory(diseaseName, cropName, severity, treatment) {
+async function saveSearchToHistory(diseaseName, cropName, severity, treatment) {
   const lang = AppState.lang;
   const scans = getScanHistory();
   const cropEmojis = { wheat:'🌾', rice:'🍚', maize:'🌽', cotton:'🫧', tomato:'🍅', potato:'🥔', onion:'🧅' };
-  
-  // Create a fake image URL using a canvas or just a placeholder with emoji
-  // For simplicity, we use a placeholder service
   const emoji = cropEmojis[cropName] || '🌿';
   const placeholder = `https://placehold.co/400x400/2e7d32/white?text=${encodeURIComponent(emoji + ' ' + cropName)}`;
 
-  scans.unshift({
+  const scanData = {
     id: Date.now(),
     disease:    diseaseName,
     diseaseHi:  diseaseName,
@@ -1948,11 +1943,42 @@ function saveSearchToHistory(diseaseName, cropName, severity, treatment) {
     date:       new Date().toLocaleDateString('en-IN'),
     severity:   severity || 'Medium',
     treatment:  treatment || ''
-  });
+  };
+
+  // 1. Save to Local Storage (Immediate Dashboard Update)
+  scans.unshift(scanData);
   if (scans.length > 20) scans.pop();
   saveScanHistoryData(scans);
-  showToast(T[lang].scanSaved);
   renderScanHistory();
+  showToast(T[lang].scanSaved);
+
+  // 2. Save to Backend (Persistent History)
+  const user = AppState.currentUser;
+  const userId = user?.id || user?._id;
+  if (userId) {
+    try {
+      console.log('💾 Saving search result to backend...');
+      await fetch(`${API_BASE}/scans`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('kr_token') || ''}`
+        },
+        body: JSON.stringify({
+          userId: userId,
+          cropName: cropName,
+          diseaseName: diseaseName,
+          severity: severity || 'Medium',
+          treatment: treatment || '',
+          tagUsed: `Search: ${diseaseName}`,
+          imagePath: placeholder
+        })
+      });
+      console.log('✅ Search result saved to backend history.');
+    } catch (err) {
+      console.warn('⚠ Failed to save search result to backend:', err.message);
+    }
+  }
 }
 
 const HINDI_MAP_OFFLINE = {

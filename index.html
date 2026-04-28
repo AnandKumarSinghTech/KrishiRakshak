@@ -68,11 +68,7 @@
         New farmer? <a href="#" onclick="showRegister()">Create Account</a>
       </p>
 
-      <div style="margin-top:1rem; padding:0.8rem; background:#f0fdf4; border:1px dashed #4caf50; border-radius:10px; font-size:0.8rem; color:#2e7d32; text-align:left;">
-        <strong>🧪 Demo Login:</strong><br/>
-        📧 ramesh@farmer.in<br/>
-        🔒 farmer123
-      </div>
+
     </div>
   </div>
 </div>
@@ -138,7 +134,7 @@
       <li><a href="#" onclick="showSection('guidance')" id="navGuidance">📚 Guidance</a></li>
       <li><a href="#" onclick="showSection('schemes')" id="navSchemes">🏛 Gov Schemes</a></li>
       <li><a href="#" onclick="showSection('profile')" id="navProfile">👤 Profile</a></li>
-      <li><a href="#" onclick="showSection('scan-history')" id="navHistory">📋 Scan History</a></li>
+      <!-- Scan History link removed as requested -->
       <li><a href="#" onclick="showSection('search')" id="navSearch">🔍 Smart Search</a></li>
     </ul>
     <div class="nav-right">
@@ -406,83 +402,10 @@
           </form>
         </div>
       </div>
-      <div class="card mt-2">
-        <h3 id="historySectionTitle">📋 My Scan History</h3>
-        <div id="profileHistory" class="scan-history-grid">
-          <p class="no-data" id="noProfileHistoryText">No scans yet.</p>
-        </div>
-      </div>
+      <!-- Profile History removed as requested -->
     </section>
 
-    <section id="sec-scan-history" class="section">
-      <div class="section-header">
-        <h2 id="scanHistoryTitle">📋 My Crop Scan History</h2>
-        <p id="scanHistorySub">View all your past crop disease detections from the database.</p>
-      </div>
-
-      <div class="scan-history-stats" id="shStatsRow">
-        <div class="sh-stat-card">
-          <span class="sh-stat-num" id="shStatTotal">–</span>
-          <span class="sh-stat-label">Total Scans</span>
-        </div>
-        <div class="sh-stat-card sh-high">
-          <span class="sh-stat-num" id="shStatHigh">–</span>
-          <span class="sh-stat-label">High Risk</span>
-        </div>
-        <div class="sh-stat-card sh-medium">
-          <span class="sh-stat-num" id="shStatMedium">–</span>
-          <span class="sh-stat-label">Medium Risk</span>
-        </div>
-        <div class="sh-stat-card sh-low">
-          <span class="sh-stat-num" id="shStatLow">–</span>
-          <span class="sh-stat-label">Low Risk</span>
-        </div>
-      </div>
-
-      <div class="sh-controls-bar">
-        <label for="shCropFilter">🌾 Crop:</label>
-        <select id="shCropFilter" onchange="applyScanHistoryFilters()">
-          <option value="all">All Crops</option>
-          <option value="wheat">Wheat</option>
-          <option value="rice">Rice</option>
-          <option value="maize">Maize</option>
-          <option value="cotton">Cotton</option>
-          <option value="tomato">Tomato</option>
-          <option value="potato">Potato</option>
-          <option value="onion">Onion</option>
-        </select>
-
-        <label for="shSeverityFilter">⚠ Risk:</label>
-        <select id="shSeverityFilter" onchange="applyScanHistoryFilters()">
-          <option value="all">All Levels</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-
-        <label for="shSortOrder">📅 Sort:</label>
-        <select id="shSortOrder" onchange="applyScanHistoryFilters()">
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
-        </select>
-
-        <button class="btn-sm" onclick="loadScanHistory()">🔄 Refresh</button>
-        <button class="btn-primary btn-sm" onclick="showSection('detection')">📷 New Scan</button>
-      </div>
-
-      <p id="shResultCount" style="font-size:.83rem;color:var(--text-muted);margin-bottom:.8rem;"></p>
-
-      <div class="sh-error-banner" id="shErrorBanner" style="display:none;">
-        ❌ Could not load scan history. Make sure the backend is running at <strong>localhost:5000</strong>.
-      </div>
-
-      <div id="scanHistoryContainer" class="sh-cards-grid">
-        <div class="sh-loading">
-          <div class="spinner"></div>
-          <p>Loading your scan history…</p>
-        </div>
-      </div>
-    </section>
+      <!-- Dedicated Scan History section removed as requested -->
 
     <section id="sec-search" class="section">
       <div class="section-header">
@@ -565,7 +488,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p id="footerCopy">© 2024 KrishiRakshak for Indian Farmers.</p>
+      <p id="footerCopy">© 2026 KrishiRakshak for Indian Farmers.</p>
     </div>
   </footer>
 

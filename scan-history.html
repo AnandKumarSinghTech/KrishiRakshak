@@ -1,0 +1,760 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌾 KisanRakshak – My Scan History</title>
+  <meta name="description" content="View, filter, and manage your crop disease scan history on KisanRakshak."/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       GLOBAL RESET & VARIABLES
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:     #2e7d32;
+      --primary-l:   #e8f5e9;
+      --primary-d:   #1b5e20;
+      --accent:      #66bb6a;
+      --accent2:     #81c784;
+      --danger:      #ef5350;
+      --warning:     #ffa726;
+      --info:        #42a5f5;
+      --bg:          #f5f9f5;
+      --card:        #ffffff;
+      --border:      #e0e0e0;
+      --text:        #1a1a2e;
+      --text-muted:  #6b7280;
+      --shadow:      0 4px 20px rgba(46,125,50,.10);
+      --radius:      14px;
+      --font:        'Poppins', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary-d), var(--primary));
+      color: white;
+      padding: .9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.18);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: .5rem;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: .85rem;
+      padding: .4rem .8rem;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,.15); color: white; }
+    .nav-links a.active { background: rgba(255,255,255,.2); color: white; font-weight: 600; }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem;
+    }
+
+    .page-header {
+      margin-bottom: 1.8rem;
+    }
+    .page-header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-d);
+    }
+    .page-header p {
+      color: var(--text-muted);
+      font-size: .9rem;
+      margin-top: .3rem;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      border-top: 3px solid var(--primary);
+    }
+    .stat-card .stat-num  { font-size: 2rem; font-weight: 700; color: var(--primary); line-height: 1; }
+    .stat-card .stat-label { font-size: .78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+    /* ── CONTROLS BAR ── */
+    .controls-bar {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .controls-bar label { font-size: .82rem; font-weight: 600; color: var(--text-muted); }
+    .controls-bar select,
+    .controls-bar input {
+      padding: .45rem .7rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: .85rem;
+      background: #fafafa;
+      color: var(--text);
+      transition: border-color .2s;
+    }
+    .controls-bar select:focus,
+    .controls-bar input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .controls-bar .spacer { flex: 1; }
+    .btn {
+      padding: .48rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-d); transform: translateY(-1px); }
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary-l); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: #c62828; }
+
+    /* ── SCANS GRID ── */
+    .scans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ── SCAN CARD ── */
+    .scan-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn .4s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+    .scan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(46,125,50,.16); }
+
+    /* Image area */
+    .scan-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: var(--primary-l);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: var(--primary);
+      border-bottom: 2px solid var(--border);
+    }
+    .scan-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Card body */
+    .scan-card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+
+    .scan-card-crop {
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--primary);
+      background: var(--primary-l);
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: 20px;
+    }
+
+    .scan-card-disease {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .scan-card-meta {
+      font-size: .78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+    }
+
+    .scan-card-treatment {
+      font-size: .8rem;
+      color: #444;
+      background: #f9f9f9;
+      border-left: 3px solid var(--accent);
+      padding: .5rem .7rem;
+      border-radius: 0 6px 6px 0;
+      margin-top: .2rem;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: .18rem .6rem;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .badge-High   { background: #ffebee; color: #c62828; }
+    .badge-Medium { background: #fff8e1; color: #e65100; }
+    .badge-Low    { background: #e8f5e9; color: #2e7d32; }
+    .badge-Unknown { background: #f5f5f5; color: #666; }
+
+    .scan-card-footer {
+      padding: .7rem 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .btn-delete {
+      background: none;
+      border: 1.5px solid var(--danger);
+      color: var(--danger);
+      padding: .3rem .8rem;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: var(--font);
+    }
+    .btn-delete:hover { background: var(--danger); color: white; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+    .empty-state .empty-icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
+    .empty-state h3 { font-size: 1.3rem; color: var(--text); margin-bottom: .5rem; }
+    .empty-state p  { font-size: .9rem; margin-bottom: 1.5rem; }
+
+    /* ── LOADING STATE ── */
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+    .spinner {
+      width: 42px; height: 42px;
+      border: 4px solid var(--primary-l);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── ERROR BANNER ── */
+    .error-banner {
+      background: #fff3f3;
+      border: 1.5px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      color: #c62828;
+      font-size: .88rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+    .error-banner.visible { display: block; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-d);
+      color: white;
+      padding: .7rem 1.4rem;
+      border-radius: 30px;
+      font-size: .88rem;
+      font-weight: 500;
+      box-shadow: 0 6px 20px rgba(0,0,0,.2);
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page-header h1 { font-size: 1.4rem; }
+      .controls-bar   { flex-direction: column; align-items: stretch; }
+      .nav-links      { display: none; }
+      .stats-row      { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────── -->
+<nav class="navbar">
+  <a class="nav-brand" href="/">🌾 KisanRakshak</a>
+  <div class="nav-links">
+    <a href="/">🏠 Dashboard</a>
+    <a href="/scan-history.html" class="active">📋 Scan History</a>
+  </div>
+</nav>
+
+<!-- ── MAIN CONTENT ───────────────────────────────── -->
+<div class="page-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>📋 My Crop Scan History</h1>
+    <p>View all your past crop disease detections. Filter, sort, and manage your records.</p>
+  </div>
+
+  <!-- Error Banner (shown when API fails) -->
+  <div class="error-banner" id="errorBanner">
+    ❌ Could not load scan history. Make sure the backend is running at <strong>localhost:5000</strong>.
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-num" id="statTotal">–</span>
+      <span class="stat-label">Total Scans</span>
+    </div>
+    <div class="stat-card" style="border-top-color:#ef5350">
+      <span class="stat-num" id="statHigh" style="color:#ef5350">–</span>
+      <span class="stat-label">High Risk</span>
+    </div>
+    <div class="stat-card" style="border-top-color:#ffa726">
+      <span class="stat-num" id="statMedium" style="color:#ffa726">–</span>
+      <span class="stat-label">Medium Risk</span>
+    </div>
+    <div class="stat-card" style="border-top-color:#66bb6a">
+      <span class="stat-num" id="statLow" style="color:#66bb6a">–</span>
+      <span class="stat-label">Low Risk</span>
+    </div>
+  </div>
+
+  <!-- Filters & Sorting Controls -->
+  <div class="controls-bar">
+
+    <label for="cropFilter">🌾 Crop:</label>
+    <select id="cropFilter" onchange="applyFilters()">
+      <option value="all">All Crops</option>
+      <option value="wheat">Wheat</option>
+      <option value="rice">Rice</option>
+      <option value="maize">Maize</option>
+      <option value="cotton">Cotton</option>
+      <option value="tomato">Tomato</option>
+      <option value="potato">Potato</option>
+      <option value="onion">Onion</option>
+    </select>
+
+    <label for="severityFilter">⚠ Risk:</label>
+    <select id="severityFilter" onchange="applyFilters()">
+      <option value="all">All Levels</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+
+    <label for="sortOrder">📅 Sort:</label>
+    <select id="sortOrder" onchange="applyFilters()">
+      <option value="newest">Newest First</option>
+      <option value="oldest">Oldest First</option>
+    </select>
+
+    <div class="spacer"></div>
+
+    <button class="btn btn-outline" onclick="loadScans()">🔄 Refresh</button>
+    <a href="/" class="btn btn-primary">+ New Scan</a>
+  </div>
+
+  <!-- Results count -->
+  <p id="resultCount" style="font-size:.83rem;color:var(--text-muted);margin-bottom:.8rem;"></p>
+
+  <!-- Scans Grid -->
+  <div class="scans-grid" id="scansGrid">
+    <!-- Cards rendered here by JavaScript -->
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading your scan history…</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- ── JAVASCRIPT ───────────────────────────────────── -->
+<script>
+// ============================================================
+//  CONFIGURATION
+// ============================================================
+const API_BASE = 'http://localhost:5000/api';
+
+// All scans loaded from backend (raw, unfiltered)
+let allScans = [];
+
+// ============================================================
+//  ON PAGE LOAD – get userId from localStorage and fetch scans
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if user is logged in (stored in localStorage by main app)
+  const savedUser = localStorage.getItem('kr_loggedIn');
+  if (!savedUser) {
+    // Not logged in → redirect to login page
+    showToast('⚠ Please login first!', 2500);
+    setTimeout(() => { window.location.href = '/'; }, 2500);
+    return;
+  }
+
+  try {
+    const user = JSON.parse(savedUser);
+    // Show logged-in user's name in header subtitle
+    document.querySelector('.page-header p').textContent =
+      `Showing scans for: ${user.name} (${user.email})`;
+
+    // Load scans from backend
+    loadScans();
+  } catch(e) {
+    showError('Could not read user session. Please login again.');
+  }
+});
+
+// ============================================================
+//  LOAD SCANS FROM BACKEND
+//  GET /api/scans/:userId
+// ============================================================
+async function loadScans() {
+  const user = getUser();
+  if (!user) return;
+
+  showLoadingState();
+  hideError();
+
+  try {
+    const sortOrder = document.getElementById('sortOrder').value;
+    const url = `${API_BASE}/scans/${user.id}?sort=${sortOrder}`;
+
+    console.log('📋 Fetching scans from:', url);
+
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('kr_token') || ''}`
+      },
+      signal: AbortSignal.timeout(8000)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    allScans = data.scans || [];
+
+    console.log(`✅ Loaded ${allScans.length} scans from backend`);
+
+    // Update stats
+    updateStats(allScans);
+
+    // Apply any active filters
+    applyFilters();
+
+  } catch (error) {
+    console.error('❌ Failed to load scans:', error.message);
+    showError('Could not load scan history. Make sure the backend is running.');
+    // Show empty state so page isn't just blank
+    renderScans([]);
+  }
+}
+
+// ============================================================
+//  APPLY FILTERS & SORTING (client-side)
+//  Runs on every filter/sort change WITHOUT re-fetching backend
+// ============================================================
+function applyFilters() {
+  const cropFilter     = document.getElementById('cropFilter').value;
+  const severityFilter = document.getElementById('severityFilter').value;
+  const sortOrder      = document.getElementById('sortOrder').value;
+
+  // Filter the already-loaded scans
+  let filtered = allScans.filter(scan => {
+    const cropMatch     = cropFilter     === 'all' || scan.cropName === cropFilter;
+    const severityMatch = severityFilter === 'all' || scan.severity === severityFilter;
+    return cropMatch && severityMatch;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    const diff = new Date(a.createdAt) - new Date(b.createdAt);
+    return sortOrder === 'oldest' ? diff : -diff;
+  });
+
+  // Update count label
+  const countEl = document.getElementById('resultCount');
+  countEl.textContent = filtered.length === allScans.length
+    ? `Showing all ${filtered.length} scans`
+    : `Showing ${filtered.length} of ${allScans.length} scans`;
+
+  renderScans(filtered);
+}
+
+// ============================================================
+//  RENDER SCAN CARDS
+// ============================================================
+function renderScans(scans) {
+  const grid = document.getElementById('scansGrid');
+
+  if (scans.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🌿</span>
+        <h3>No scans found</h3>
+        <p>${allScans.length > 0
+          ? 'No scans match your current filters. Try changing the filters above.'
+          : 'You have not done any crop scans yet. Start scanning your crops!'
+        }</p>
+        <a href="/" class="btn btn-primary">📷 Go to Scan</a>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = scans.map(scan => buildScanCard(scan)).join('');
+}
+
+// ============================================================
+//  BUILD HTML FOR A SINGLE SCAN CARD
+// ============================================================
+function buildScanCard(scan) {
+  // Format the date nicely
+  const date = new Date(scan.createdAt);
+  const dateStr = date.toLocaleDateString('en-IN', {
+    day: '2-digit', month: 'short', year: 'numeric'
+  });
+  const timeStr = date.toLocaleTimeString('en-IN', {
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  // Severity badge
+  const severityBadge = `<span class="badge badge-${scan.severity}">${scan.severity || 'Unknown'}</span>`;
+
+  // Image section: show real image if available, else show emoji placeholder
+  const imgHtml = scan.imagePath
+    ? `<img src="http://localhost:5000${scan.imagePath}" alt="Crop scan" onerror="this.parentElement.innerHTML='🌿'" />`
+    : getCropEmoji(scan.cropName);
+
+  // Treatment text (trimmed to keep cards short)
+  const treatment = scan.treatment
+    ? scan.treatment.slice(0, 120) + (scan.treatment.length > 120 ? '…' : '')
+    : 'No treatment info';
+
+  return `
+    <div class="scan-card" id="card-${scan._id}">
+      <!-- Image -->
+      <div class="scan-card-img">${imgHtml}</div>
+
+      <!-- Body -->
+      <div class="scan-card-body">
+        <span class="scan-card-crop">🌾 ${capitalize(scan.cropName)}</span>
+        <div class="scan-card-disease">🦠 ${scan.diseaseName}</div>
+        <div>${severityBadge}</div>
+        <div class="scan-card-meta">
+          <span>📅 ${dateStr} at ${timeStr}</span>
+          ${scan.village ? `<span>📍 ${scan.village}</span>` : ''}
+          ${scan.tagUsed ? `<span>🏷 Tags: <em>${scan.tagUsed}</em></span>` : ''}
+        </div>
+        <div class="scan-card-treatment">
+          💊 <strong>Treatment:</strong> ${treatment}
+        </div>
+      </div>
+
+      <!-- Footer with delete button -->
+      <div class="scan-card-footer">
+        <button class="btn-delete" onclick="deleteScan('${scan._id}')">
+          🗑 Delete
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+//  DELETE A SCAN
+//  Calls DELETE /api/scans/:id
+//  Then removes card from UI immediately (no page reload needed)
+// ============================================================
+async function deleteScan(scanId) {
+  // Ask for confirmation before deleting
+  if (!confirm('Are you sure you want to delete this scan? This cannot be undone.')) return;
+
+  try {
+    console.log('🗑 Deleting scan:', scanId);
+
+    const response = await fetch(`${API_BASE}/scans/${scanId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('kr_token') || ''}`
+      },
+      signal: AbortSignal.timeout(5000)
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.message || `Delete failed: ${response.status}`);
+    }
+
+    console.log('✅ Scan deleted:', scanId);
+
+    // Remove from local array (no re-fetch needed)
+    allScans = allScans.filter(s => s._id !== scanId);
+
+    // Animate card removal
+    const card = document.getElementById(`card-${scanId}`);
+    if (card) {
+      card.style.transition = 'opacity .3s, transform .3s';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(.95)';
+      setTimeout(() => {
+        applyFilters();       // re-render without this scan
+        updateStats(allScans); // update counts
+      }, 300);
+    }
+
+    showToast('✅ Scan deleted successfully!');
+
+  } catch (error) {
+    console.error('❌ Delete failed:', error.message);
+    showToast('❌ Delete failed. Please try again.', 3000);
+  }
+}
+
+// ============================================================
+//  UPDATE STATS COUNTERS
+// ============================================================
+function updateStats(scans) {
+  document.getElementById('statTotal').textContent  = scans.length;
+  document.getElementById('statHigh').textContent   = scans.filter(s => s.severity === 'High').length;
+  document.getElementById('statMedium').textContent = scans.filter(s => s.severity === 'Medium').length;
+  document.getElementById('statLow').textContent    = scans.filter(s => s.severity === 'Low' || s.severity === 'Unknown').length;
+}
+
+// ============================================================
+//  HELPER FUNCTIONS
+// ============================================================
+function getUser() {
+  try {
+    return JSON.parse(localStorage.getItem('kr_loggedIn'));
+  } catch { return null; }
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getCropEmoji(cropName) {
+  const emojis = {
+    wheat: '🌾', rice: '🍚', maize: '🌽',
+    cotton: '🫧', tomato: '🍅', potato: '🥔', onion: '🧅'
+  };
+  return emojis[cropName] || '🌿';
+}
+
+function showLoadingState() {
+  document.getElementById('scansGrid').innerHTML = `
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading your scan history…</p>
+    </div>
+  `;
+}
+
+function showError(msg) {
+  const banner = document.getElementById('errorBanner');
+  banner.textContent = '❌ ' + msg;
+  banner.classList.add('visible');
+}
+function hideError() {
+  document.getElementById('errorBanner').classList.remove('visible');
+}
+
+function showToast(msg, duration = 3000) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+}
+</script>
+
+</body>
+</html> -->

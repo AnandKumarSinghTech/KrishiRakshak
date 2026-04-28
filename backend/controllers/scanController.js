@@ -1,5 +1,3 @@
-
-
 const Scan = require('../models/Scan');
 
 const getScans = async (req, res) => {
@@ -113,4 +111,43 @@ const deleteScan = async (req, res) => {
   }
 };
 
-module.exports = { getScans, filterScans, deleteScan };
+const createScan = async (req, res) => {
+  try {
+    const { userId, cropName, diseaseName, severity, treatment, imagePath, tagUsed } = req.body;
+
+    if (!userId || !cropName || !diseaseName) {
+      return res.status(400).json({
+        success: false,
+        message: '❌ userId, cropName, and diseaseName are required.',
+      });
+    }
+
+    const newScan = new Scan({
+      userId,
+      cropName,
+      diseaseName,
+      severity,
+      treatment,
+      imagePath,
+      tagUsed
+    });
+
+    await newScan.save();
+
+    return res.status(201).json({
+      success: true,
+      message: '✅ Scan saved to history successfully.',
+      scan: newScan
+    });
+
+  } catch (error) {
+    console.error('❌ createScan error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: '❌ Server error while saving scan.',
+      error:   error.message,
+    });
+  }
+};
+
+module.exports = { getScans, filterScans, deleteScan, createScan };

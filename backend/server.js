@@ -12,6 +12,9 @@ dotenv.config();
 
 const app = express();
 
+// ✅ Trust proxy for Vercel/Heroku/etc. to ensure HTTPS works with Passport
+app.set('trust proxy', 1);
+
 app.use(cors({ origin: true, credentials: true }));
 
 app.use(express.json());
@@ -40,9 +43,11 @@ const scanRoutes        = require('./routes/scanRoutes');
 const alertRoutes       = require('./routes/alertRoutes');  
 const searchRoutes      = require('./routes/searchRoutes'); 
 
-app.use('/api/auth', authRoutes);
-
+// ✅ IMPORTANT: Google route MUST come before /api/auth
+// Otherwise Express matches /api/auth first and swallows the Google path
 app.use('/api/auth/google', googleAuthRouter);
+
+app.use('/api/auth', authRoutes);
 
 app.use('/api', detectRoutes);
 
@@ -73,7 +78,7 @@ app.get('/api', (req, res) => {
 });
 
 const PORT      = process.env.PORT     || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/krishirakshak';
+const MONGO_URI = (process.env.MONGO_URI || 'mongodb://localhost:27017/krishirakshak').trim();
 
 mongoose
   .connect(MONGO_URI)

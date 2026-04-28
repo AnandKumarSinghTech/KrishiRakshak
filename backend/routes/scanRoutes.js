@@ -3,7 +3,9 @@
 const express = require('express');
 const router  = express.Router();
 
-const { getScans, filterScans, deleteScan } = require('../controllers/scanController');
+const { getScans, filterScans, deleteScan, createScan } = require('../controllers/scanController');
+
+router.post('/', createScan);
 
 router.get('/filter', filterScans);
 
