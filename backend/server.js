@@ -8,7 +8,7 @@ const path           = require('path');
 const session        = require('express-session');  
 const passport       = require('passport');          
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
@@ -77,41 +77,62 @@ app.get('/api', (req, res) => {
   });
 });
 
-const PORT      = process.env.PORT     || 5000;
+const PORT      = process.env.PORT || 5000;
 const MONGO_URI = (process.env.MONGO_URI || 'mongodb://localhost:27017/krishirakshak').trim();
 
+// Mask URI for logging
+const maskedURI = MONGO_URI.replace(/\/\/(.*):(.*)@/, '//***:***@');
+
+// 🔌 Connect to MongoDB
 mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected successfully!');
-    console.log(`📍 Database: ${MONGO_URI}`);
-
-    app.listen(PORT, () => {
-      console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-      console.log(`\n📋 Available Endpoints:`);
-      console.log(`   POST   http://localhost:${PORT}/api/auth/register`);
-      console.log(`   POST   http://localhost:${PORT}/api/auth/login`);
-      console.log(`   GET    http://localhost:${PORT}/api/auth/google   ← Google OAuth`);
-      console.log(`   POST   http://localhost:${PORT}/api/detect`);
-      console.log(`   GET    http://localhost:${PORT}/api/diseases/:cropName`);
-      console.log(`   GET    http://localhost:${PORT}/api/search?query=yellow+spots  ← Bilingual Search`);
-      console.log(`   GET    http://localhost:${PORT}/api/scans/:userId  ← Scan History`);
-      console.log(`   DELETE http://localhost:${PORT}/api/scans/:id`);
-      console.log(`   GET    http://localhost:${PORT}/api/alerts/:userId ← Weather Alerts`);
-      console.log(`\n🌐 Open frontend: http://localhost:${PORT}`);
-
-      if (!process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
-        console.log(`\n⚠️  Google OAuth not configured yet!`);
-        console.log(`   Add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to your .env file`);
-        console.log(`   Guide: https://console.cloud.google.com/`);
-      } else {
-        console.log(`\n✅ Google OAuth is configured!`);
-      }
-    });
+    console.log(`📍 Database: ${maskedURI}`);
   })
   .catch((err) => {
     console.error('❌ MongoDB connection failed:', err.message);
     console.error('💡 Make sure MongoDB is running!');
   });
+
+// 🏥 API Health Check
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    time: new Date().toISOString(),
+    url: req.url,
+    originalUrl: req.originalUrl
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok (fallback)',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    time: new Date().toISOString(),
+    url: req.url,
+    originalUrl: req.originalUrl
+  });
+});
+
+app.all('*', (req, res, next) => {
+  console.log(`Unmatched route hit: ${req.method} ${req.url} (originalUrl: ${req.originalUrl})`);
+  next();
+});
+
+// 🚀 Start Server (Only if not on Vercel)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+    console.log(`\n📋 Available Endpoints:`);
+    console.log(`   GET    http://localhost:${PORT}/api/health        ← Health Check`);
+    console.log(`   POST   http://localhost:${PORT}/api/auth/register`);
+    console.log(`   POST   http://localhost:${PORT}/api/auth/login`);
+    console.log(`   GET    http://localhost:${PORT}/api/auth/google   ← Google OAuth`);
+    console.log(`   POST   http://localhost:${PORT}/api/detect`);
+    console.log(`\n🌐 Open frontend: http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;

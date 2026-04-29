@@ -14,7 +14,7 @@ const AppState = {
   tags: []          
 };
 
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.startsWith('192.168.') || window.location.hostname.startsWith('10.') || window.location.hostname === '') 
   ? 'http://localhost:5000/api' 
   : '/api';
 
@@ -520,10 +520,11 @@ async function handleLogin(e) {
     return;
   } catch (err) {
     hideLoading();
-    console.warn('Login failed:', err.message);
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      el('pwErr').textContent = '❌ Backend connection failed. Please check Vercel database connection.';
-      return;
+    console.error('Login Fetch Error:', err);
+    // Show a warning but DON'T return, so it falls back to local storage (offline mode)
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.hostname.startsWith('192.168.')) {
+      el('pwErr').textContent = '⚠️ Backend unreachable. Trying offline mode... (Error: ' + err.message + ')';
+      setTimeout(() => { if(el('pwErr').textContent.includes('Backend unreachable')) el('pwErr').textContent = ''; }, 3000);
     }
   }
 
@@ -614,10 +615,10 @@ async function handleRegister(e) {
     return;
   } catch (err) {
     hideLoading();
-    console.warn('Register failed:', err.message);
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      el('regErr').textContent = '❌ Backend connection failed. Please check Vercel database connection.';
-      return;
+    console.error('Registration Fetch Error:', err);
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.hostname.startsWith('192.168.')) {
+      el('regErr').textContent = '⚠️ Registration server unreachable. Using offline mode... (Error: ' + err.message + ')';
+      setTimeout(() => { if(el('regErr').textContent.includes('unreachable')) el('regErr').textContent = ''; }, 3000);
     }
   }
 
@@ -644,10 +645,23 @@ function logout() {
   el('page-login').classList.add('active');
   el('page-register').classList.remove('active');
   el('loginForm').reset();
+  // Clear any persistent error messages from previous attempts
+  if (el('pwErr'))  el('pwErr').textContent = '';
+  if (el('regErr')) el('regErr').textContent = '';
 }
 
 function showRegister() { el('page-login').classList.remove('active'); el('page-register').classList.add('active'); }
 function showLogin()     { el('page-register').classList.remove('active'); el('page-login').classList.add('active'); }
+
+async function checkApiStatus() {
+  try {
+    const res = await fetch(`${API_BASE}/`);
+    const data = await res.json();
+    console.log('📡 Backend API Status:', data.message || 'Running');
+  } catch (err) {
+    console.warn('📡 Backend API is unreachable:', err.message);
+  }
+}
 
 function launchApp() {
   el('page-login').classList.remove('active');
@@ -935,7 +949,7 @@ async function detectPest() {
       crop:       cropName,
       confidence: 90,
       severity:  data.results?.[0]?.severity || 'Medium',
-      imageUrl:  data.imagePath ? `${window.location.origin}${data.imagePath}` : AppState.previewImageUrl,
+      imageUrl:  data.imagePath ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '' ? 'http://localhost:5000' : '') + data.imagePath : AppState.previewImageUrl,
       date:       new Date().toLocaleDateString('en-IN'),
       timestamp: new Date().toISOString()
     };
